@@ -1,10 +1,10 @@
 <?php
 // koneksi.php - Database Connection Configuration for IGRS
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db   = 'dbcompro_uas_2388010002';
+$host = getenv('DB_HOST') ?: 'db-webdinamis';
+$user = getenv('DB_USER') ?: 'user-web-dinamis_2388010002';
+$pass = getenv('DB_PASSWORD') ?: 'IDKxP7WIpyg9ejO(';
+$db   = getenv('DB_NAME') ?: 'dbcompro_uas_2388010002';
 
 // Create connection
 $conn = mysqli_connect($host, $user, $pass, $db);
