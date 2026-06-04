@@ -13,7 +13,7 @@ if($search != ''){
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>PHANTOM RATING - IGRS</title>
+    <title>Indonesia Gak Guna Rating Sistem- IGRS</title>
     <style>
         /* Base P5 Style */
         body {
