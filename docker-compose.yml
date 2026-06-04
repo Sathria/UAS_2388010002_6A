@@ -14,10 +14,10 @@ services:
     image: mariadb:lts
     container_name: uas-db-container
     environment:
-      MYSQL_ROOT_PASSWORD: 'password!123'
+      MYSQL_ROOT_PASSWORD: ''
       MYSQL_DATABASE: 'dbcompro_uas_2388010002'
-      MYSQL_USER: 'user-web-dinamis_2388010002'
-      MYSQL_PASSWORD: 'IDKxP7WIpyg9ejO('
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: ''
     ports:
       - "3306:3306"
     volumes:

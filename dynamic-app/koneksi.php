@@ -1,9 +1,9 @@
 <?php
 // koneksi.php - Database Connection Configuration for IGRS
 
-$host = 'db-webdinamis';
-$user = 'user-web-dinamis_2388010002';
-$pass = 'IDKxP7WIpyg9ejO(';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
 $db   = 'dbcompro_uas_2388010002';
 
 // 1. Create connection
