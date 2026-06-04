@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV | Ananda Sathria Maulana Amri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Tema Dark Emerald */
+        :root {
+            --bg-main: #0f1513;
+            --bg-card: #17241e;
+            --header-bg: #111d18;
+            --accent-green: #34d399;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #263c33;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Easter Egg Matrix Canvas --- */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s ease-in-out;
+        }
+
+        #matrixCanvas.active {
+            opacity: 0.15;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Header Section --- */
+        .header-wrapper {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 50px 20px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .header-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-green);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+        }
+
+        .header-text h1 {
+            font-size: 2.2em;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+
+        .header-text .headline {
+            font-size: 1.05em;
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .sub-info {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+        }
+
+        .sub-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Main Layout --- */
+        .main-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h2.section-title {
+            color: #ffffff;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2.section-title i {
+            color: var(--accent-green);
+        }
+
+        /* --- Left Column (Sidebar) --- */
+        .sidebar section {
+            margin-bottom: 40px;
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            margin-bottom: 12px;
+        }
+
+        .contact-list a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .contact-list a:hover {
+            background-color: var(--bg-card);
+            color: var(--accent-green);
+            transform: translateX(5px);
+        }
+
+        .cert-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cert-icon {
+            background-color: rgba(52, 211, 153, 0.1);
+            color: var(--accent-green);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.2em;
+        }
+
+        .cert-info h4 {
+            font-size: 0.9em;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+
+        .cert-info .cert-issuer {
+            display: block;
+            font-size: 0.75em;
+            color: var(--accent-green);
+            margin-bottom: 3px;
+        }
+
+        .cert-info .cert-id {
+            display: block;
+            font-size: 0.7em;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-btn {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skill-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--bg-main);
+            border-color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* --- Right Column (Content) --- */
+        .content section {
+            margin-bottom: 40px;
+        }
+
+        .content p {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            color: var(--text-muted);
+        }
+
+        .timeline {
+            border-left: 2px solid var(--border-color);
+            padding-left: 25px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--border-color);
+            transform: scale(1.01);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-green);
+        }
+
+        .timeline-item h4 {
+            color: #ffffff;
+            font-size: 1.05em;
+            margin-bottom: 2px;
+        }
+
+        .timeline-item h5 {
+            color: var(--accent-green);
+            font-size: 0.85em;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item span.date {
+            display: inline-block;
+            font-size: 0.75em;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            margin-bottom: 0;
+            font-size: 0.9em;
+        }
+
+        /* --- Carousel / Showcase --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Tambahan: Tag Video disejajarkan dengan img */
+        .mySlides img,
+        .mySlides video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.3s ease;
+            border-radius: 0 5px 5px 0;
+            user-select: none;
+            background-color: rgba(52, 211, 153, 0.2);
+            border: none;
+            z-index: 2;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: var(--accent-green);
+            color: var(--bg-main);
+        }
+
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background-color: var(--header-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-main {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .footer-sub {
+            color: var(--accent-green);
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.75em;
+        }
+
+        /* --- Popups & Modals --- */
+        #skillPopup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--bg-card);
+            color: var(--text-light);
+            padding: 30px 50px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-green);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #skillPopup.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #skillPopup i {
+            font-size: 4em;
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            animation: zoomIn 0.3s;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 8px;
+            border: 2px solid var(--accent-green);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #b91c1c;
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .sub-info {
+                justify-content: center;
+            }
+
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .timeline {
+                padding-left: 15px;
+            }
+
+            .timeline-item::before {
+                left: -22px;
+            }
+
+            /* Tambahan: Memastikan video juga mengecil di HP */
+            .mySlides img,
+            .mySlides video {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="content-wrapper">
+        <div class="header-wrapper">
+            <header class="header-container">
+                <img src="foto-profil.jpg" alt="Foto Profil" class="profile-img" id="profilePic"
+                    title="Klik saya 3 kali!">
+                <div class="header-text">
+                    <h1>Ananda Sathria Maulana Amri</h1>
+                    <p class="headline">"Visionary Game Developer & 3D Animator"</p>
+                    <div class="sub-info">
+                        <span><i class="fa-solid fa-id-badge"></i> 2388010002</span>
+                        <span><i class="fa-solid fa-code"></i> Informatika</span>
+                        <span><i class="fa-solid fa-location-dot"></i> Indonesia</span>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <div class="main-container">
+
+            <aside class="sidebar">
+                <section>
+                    <h2 class="section-title"><i class="fa-solid fa-link"></i> Kontak</h2>
+                    <ul class="contact-list">
+                        <li><a href="mailto:anandasmaid@gmail.com"><i class="fa-solid fa-envelope"></i>
+                                anandasmaid@gmail.com</a></li>
+                        <li><a href="https://linkedin.com/in/ananda-sathria-maulana-amri-580553316/" target="_blank"><i
+                                    class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="https://github.com/Sathria" target="_blank"><i class="fa-brands fa-github"></i>
+                                GitHub</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="section-title"><i class="fa-solid fa-award"></i> Sertifikasi</h2>
+                    <div class="cert-card" onclick="openCert('cert-cyber.jpg')">
+                        <div class="cert-icon"><i class="fa-solid fa-shield-virus"></i></div>
+                        <div class="cert-info">
+                            <h4>CYBERSECURITY CAREER STARTER CERTIFICATION (CCSC)</h4>
+                            <span class="cert-issuer"><i class="fa-solid fa-building-columns"></i> Hack & Fix Academy —
+                                Maret 2026</span>
+                            <span class="cert-id"><i class="fa-solid fa-fingerprint"></i> ID: 4925-2885-5581-3372</span>
+                        </div>
+                    </div>
+                    <div class="cert-card" onclick="openCert('cert-cisco.png')">
+                        <div class="cert-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <div class="cert-info">
+                            <h4>Introduction to Cybersecurity</h4>
+                            <span class="cert-issuer"><i class="fa-solid fa-building-columns"></i> Cisco Networking
+                                Academy</span>
+                            <span class="cert-id"><i class="fa-regular fa-calendar-check"></i> 31 Jul 2025</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title"><i class="fa-solid fa-bolt"></i> Keahlian</h2>
+                    <div class="skills-container">
+                        <button class="skill-btn" onclick="showSkill('Animasi 3D', 'fa-solid fa-cube')">Animasi
+                            3D</button>
+                        <button class="skill-btn"
+                            onclick="showSkill('Cybersecurity', 'fa-solid fa-shield-halved')">Cybersecurity</button>
+                        <button class="skill-btn"
+                            onclick="showSkill('Manajer Project', 'fa-solid fa-list-check')">Manajer Project</button>
+                        <button class="skill-btn"
+                            onclick="showSkill('Website', 'fa-solid fa-laptop-code')">Website</button>
+                        <button class="skill-btn" onclick="showSkill('Game Developer', 'fa-solid fa-gamepad')">Game
+                            Developer</button>
+                        <button class="skill-btn" onclick="showSkill('Cloud Computing', 'fa-solid fa-cloud')">Cloud
+                            Computing</button>
+                        <button class="skill-btn" onclick="showSkill('Video Editing', 'fa-solid fa-film')">Video
+                            Editing</button>
+                    </div>
+                </section>
+            </aside>
+
+            <main class="content">
+                <section>
+                    <h2 class="section-title"><i class="fa-regular fa-user"></i> Tentang Saya</h2>
+                    <p>Saya adalah mahasiswa Informatika yang saat ini sedang fokus mengeksplorasi dan mempelajari
+                        Cybersecurity, Animasi 3D, serta Infrastruktur Cloud. Berbekal sertifikasi di bidang
+                        Cybersecurity, saya memiliki landasan kuat dalam memahami keamanan sistem serta merancang
+                        infrastruktur digital yang efisien.</p>
+                </section>
+
+                <section>
+                    <h2 class="section-title"><i class="fa-solid fa-images"></i> Showcase & Portofolio</h2>
+                    <div class="carousel-container">
+                        <div class="mySlides fade">
+                            <img src="showcase1.jpg" alt="Showcase 1">
+                            <div class="slide-caption">Project E-Ling: Sistem Pencatatan Keuangan</div>
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="showcase2.jpg" alt="Showcase 2">
+                            <div class="slide-caption">Haruman Asgar: Website Booking Barbershop</div>
+                        </div>
+                        <div class="mySlides fade">
+                            <video src="showcase3.mp4" autoplay muted loop playsinline controls></video>
+                            <div class="slide-caption">Hasil Render Animasi 3D & Modelling</div>
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="showcase4.jpg" alt="Showcase 4">
+                            <div class="slide-caption">Game Development & Cybersecurity Infrastructure</div>
+                        </div>
+
+                        <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+                        <button class="next" onclick="plusSlides(1)">&#10095;</button>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title"><i class="fa-solid fa-code-branch"></i> Pengalaman Proyek & Organisasi
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>Manajer Project - E-Ling</h4>
+                            <h5>Sistem Pencatatan Keuangan</h5>
+                            <p>Mengelola dan memimpin tim dalam perancangan aplikasi pencatatan keuangan yang
+                                terstruktur untuk memudahkan manajemen finansial.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Web Developer - Haruman Asgar</h4>
+                            <h5>Website Booking Barbershop</h5>
+                            <p>Mengembangkan platform website interaktif untuk manajemen antrean dan layanan pada
+                                Barbershop Haruman Asgar.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Anggota Dept. EDUTECH</h4>
+                            <h5>Himpunan Mahasiswa Informatika (HIMAFOR)</h5>
+                            <p>Aktif berkontribusi di Department of Educational Science and Technology dalam menjalankan
+                                program-program pengembangan akademik mahasiswa.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Pendidikan</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>S1 Informatika</h4>
+                            <h5>UIN Siber Syekh Nurjati Cirebon</h5>
+                            <span class="date">2023 - Sekarang</span>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Jurusan IPA</h4>
+                            <h5>SMAN 1 Dukupuntang</h5>
+                            <span class="date">2019 - 2022</span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <div class="footer-main">Dideploy oleh Ananda Sathria Maulana Amri - 2388010002</div>
+            <div class="footer-sub">Ujian Tengah Semester - Administrasi Server</div>
+            <div class="footer-copy"><i class="fa-regular fa-copyright"></i> 2026 Ananda Sathria Maulana Amri. All
+                rights reserved.</div>
+        </footer>
+    </div>
+
+    <div id="skillPopup"><i id="skillIcon" class=""></i>
+        <h2 id="skillText">Skill</h2>
+    </div>
+    <div id="certModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeCert()"><i class="fa-solid fa-xmark"></i></button>
+            <img id="certImage" src="" alt="Sertifikat">
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        let slideTimer;
+
+        showSlides(slideIndex);
+        startSlideTimer();
+
+        function plusSlides(n) {
+            clearTimeout(slideTimer);
+            showSlides(slideIndex += n);
+            startSlideTimer();
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+        function startSlideTimer() {
+            slideTimer = setTimeout(function () {
+                plusSlides(1);
+            }, 10000);
+        }
+
+        let skillTimeout;
+        function showSkill(skillName, iconClass) {
+            const popup = document.getElementById('skillPopup');
+            document.getElementById('skillIcon').className = iconClass;
+            document.getElementById('skillText').innerText = skillName;
+            popup.classList.add('active');
+            clearTimeout(skillTimeout);
+            skillTimeout = setTimeout(() => { popup.classList.remove('active'); }, 2000);
+        }
+
+        function openCert(imageSrc) {
+            document.getElementById('certImage').src = imageSrc;
+            document.getElementById('certModal').style.display = 'flex';
+        }
+        function closeCert() { document.getElementById('certModal').style.display = 'none'; }
+        document.getElementById('certModal').addEventListener('click', function (e) {
+            if (e.target === this) closeCert();
+        });
+
+        let clickCount = 0;
+        let matrixActive = false;
+        const profilePic = document.getElementById('profilePic');
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = '01'.split('');
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for (let x = 0; x < columns; x++) drops[x] = 1;
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(15, 21, 19, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#34d399';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+
+        let clickTimer;
+        profilePic.addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => { clickCount = 0; }, 1000);
+            if (clickCount >= 3 && !matrixActive) {
+                matrixActive = true;
+                canvas.classList.add('active');
+                setInterval(drawMatrix, 50);
+                alert("Easter Egg Ditemukan! Menginisialisasi Protokol Keamanan... 👨‍💻");
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+
+</html>
