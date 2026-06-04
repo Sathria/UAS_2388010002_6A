@@ -14,7 +14,7 @@ services:
     image: mariadb:lts
     container_name: uas-db-container
     environment:
-      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      MYSQL_ROOT_PASSWORD: 'password!123'
       MYSQL_DATABASE: 'dbcompro_uas_2388010002'
       MYSQL_USER: 'user-web-dinamis_2388010002'
       MYSQL_PASSWORD: 'IDKxP7WIpyg9ejO('
@@ -32,6 +32,9 @@ services:
       - "3000:80"
     volumes:
       - ./dynamic-app/uploads:/var/www/html/uploads
+    command: /bin/sh -c "chmod -R 777 /var/www/html/uploads && apache2-foreground"
+    environment:
+      - DB_HOST=db-webdinamis
     depends_on:
       - db-webdinamis
     restart: always
