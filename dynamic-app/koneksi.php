@@ -4,7 +4,7 @@
 $host = 'db-webdinamis';
 $user = 'user-web-dinamis_2388010002';
 $pass = 'IDKxP7WIpyg9ejO(';
-$db   = 'dbcompro_2388010002';
+$db   = 'dbcompro_uas_2388010002';
 
 // Create connection
 $conn = mysqli_connect($host, $user, $pass, $db);
