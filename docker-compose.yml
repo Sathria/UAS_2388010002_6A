@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # 1. CONTAINER WEB STATIS PORTOFOLIO (Port 80)
+  static-cv:
+    build: ./static-cv
+    container_name: uas-static-container
+    ports:
+      - "80:80"
+    restart: always
+
+  # 2. CONTAINER DATABASE MARIADB
+  db-webdinamis:
+    image: mariadb:lts
+    container_name: uas-db-container
+    environment:
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      MYSQL_DATABASE: 'dbcompro_2388010002'
+      MYSQL_USER: 'user-web-dinamis_2388010002'
+      MYSQL_PASSWORD: 'IDKxP7WIpyg9ejO('
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dynamic-app/db_data:/docker-entrypoint-initdb.d
+    restart: always
+
+  # 3. CONTAINER WEB DINAMIS RATING GAME PERSONA 5 (Port 3000)
+  dynamic-app:
+    build: ./dynamic-app
+    container_name: uas-dinamis-container
+    ports:
+      - "3000:80"
+    volumes:
+      - ./dynamic-app/uploads:/var/www/html/uploads
+    depends_on:
+      - db-webdinamis
+    restart: always
