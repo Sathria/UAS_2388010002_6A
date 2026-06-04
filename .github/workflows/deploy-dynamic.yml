@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'dynamic-app/**' # Pipeline ini hanya jalan jika folder dynamic-app berubah
+      - 'dynamic-app/**'
 
 jobs:
   build-and-push-dynamic:
@@ -38,5 +38,9 @@ jobs:
         key: ${{ secrets.AWS_PRIVATE_KEY }}
         script: |
           cd ~/uas-cloud
+          git reset --hard HEAD
+          git clean -fd
           git pull origin main
-          docker compose up -d --build dynamic-app
+          docker compose stop dynamic-app || true
+          docker compose rm -f dynamic-app || true
+          docker compose up -d --build --force-recreate dynamic-app
