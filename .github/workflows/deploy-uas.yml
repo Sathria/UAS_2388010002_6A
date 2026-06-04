@@ -14,22 +14,22 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets::DOCKER_USERNAME }}
-        password: ${{ secrets::DOCKER_PASSWORD }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push Static CV Image
       uses: docker/build-push-action@v4
       with:
         context: ./static-cv
         push: true
-        tags: ${{ secrets::DOCKER_USERNAME }}/uas-static-cv:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/uas-static-cv:latest
 
     - name: Build and Push Dynamic App Image
       uses: docker/build-push-action@v4
       with:
         context: ./dynamic-app
         push: true
-        tags: ${{ secrets::DOCKER_USERNAME }}/uas-dynamic-app:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/uas-dynamic-app:latest
 
   deploy-to-ec2:
     needs: build-and-push
@@ -38,9 +38,9 @@ jobs:
     - name: Executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets::AWS_HOST }}
-        username: ${{ secrets::AWS_USERNAME }}
-        key: ${{ secrets::AWS_PRIVATE_KEY }}
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USERNAME }}
+        key: ${{ secrets.AWS_PRIVATE_KEY }}
         script: |
           cd ~/uas-cloud
           git pull origin main
