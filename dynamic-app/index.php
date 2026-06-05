@@ -74,7 +74,7 @@ if($search != ''){
         <div class="logo">GAK GUNA<span>RATING SISTEM</span></div>
         <div class="nav-links">
             <a href="index.php">HOME</a>
-            <a href="admin/login.php" onclick="playGifTransition(event)">ADMIN PANEL</a>
+            <a href="admin/login.php" onclick="playGifTransition(event)">LOGIN ADMIN</a>
         </div>
     </header>
 
