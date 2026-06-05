@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rating = trim($_POST['rating_satir'] ?? '');
     $alasan = trim($_POST['alasan_kocak'] ?? '');
     
-    // Check if files are uploaded
+    // Check if fields are uploaded
     if (empty($judul) || empty($developer) || empty($rating) || empty($alasan)) {
         $error_msg = 'Semua field teks wajib diisi!';
     } else {
@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!in_array($file_ext, $allowed_exts)) {
                 $error_msg = 'Format cover tidak valid! Hanya diperbolehkan: jpg, jpeg, png, webp, gif.';
             } else {
-                // Ensure upload directory exists
-                $upload_dir = '../uploads/';
+                // FIX: Menggunakan absolut container path agar terikat langsung dengan volume Docker Compose
+                $upload_dir = '/var/www/html/uploads/';
                 if (!is_dir($upload_dir)) {
                     mkdir($upload_dir, 0775, true);
                 }
@@ -78,12 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Game - PHANTOM RATING ADMIN</title>
+    <title>Tambah Game - UAS 2388010002 ADMIN</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-    <!-- Header Section -->
     <header class="header-wrapper">
         <div class="header-bg-slant"></div>
         <div class="container header-content">
@@ -94,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <circle cx="50" cy="50" r="14" fill="#dc143c" />
                     <polygon points="50,42 53,48 60,48 55,52 57,58 50,54 43,58 45,52 40,48 47,48" fill="#ffffff" />
                 </svg>
-                <div class="logo-text-large">PHANTOM<span>RATING</span></div>
+                <div class="logo-text-large">UAS<span>2388010002</span></div>
             </a>
             
             <nav class="nav-menu">
@@ -104,7 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </header>
 
-    <!-- Form Container -->
     <main class="container login-wrapper" style="min-height: auto; margin-top: 20px;">
         <div class="login-card" style="max-width: 600px; transform: rotate(0deg);">
             <h1 class="login-title">TAMBAH RATING GAME</h1>
@@ -152,10 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <p class="footer-text">PHANTOM RATING © 2026 - Indonesia Gak Guna Rating System</p>
+            <p class="footer-text">PHANTOM RATING © 2026 - UAS Cloud Computing - Ananda Sathria M.A (2388010002)</p>
         </div>
     </footer>
 
