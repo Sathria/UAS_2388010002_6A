@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!in_array($file_ext, $allowed_exts)) {
                 $error_msg = 'Format cover tidak valid! Hanya diperbolehkan: jpg, jpeg, png, webp, gif.';
             } else {
-                // Jalur relatif aman yang terikat langsung dengan volume Docker Compose
+                // Jalur relatif aman langsung ke volume Docker
                 $upload_dir = '../uploads/';
                 
                 // Generate a unique and sanitized filename
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $dest_path = $upload_dir . $nama_gambar;
                 
                 if (!move_uploaded_file($file_tmp, $dest_path)) {
-                    $error_msg = 'Gagal mengupload gambar ke folder tujuan.';
+                    $error_msg = 'Gagal mengupload gambar ke folder tujuan. Periksa permission folder uploads.';
                     $nama_gambar = '';
                 }
             }

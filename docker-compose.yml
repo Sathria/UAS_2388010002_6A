@@ -9,7 +9,7 @@ services:
       - "80:80"
     restart: always
 
-  # 2. CONTAINER DATABASE MARIADB
+  # 2. CONTAINER DATABASE MARIADB (Aman & Terisolasi)
   db-webdinamis:
     image: mariadb:lts
     container_name: uas-db-container
@@ -17,8 +17,6 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_DATABASE: 'dbcompro_uas_2388010002'
-    ports:
-      - "3306:3306"
     volumes:
       - ./dynamic-app/db_data:/docker-entrypoint-initdb.d
     restart: always
@@ -31,7 +29,9 @@ services:
       - "3000:80"
     volumes:
       - ./dynamic-app/uploads:/var/www/html/uploads
-    command: /bin/sh -c "mkdir -p /var/www/html/uploads && chmod -R 777 /var/www/html/uploads && apache2-foreground"
+    command: /bin/sh -c "mkdir -p /var/www/html/uploads && chown -R www-data:www-data /var/www/html/uploads && chmod -R 777 /var/www/html/uploads && apache2-foreground"
+    environment:
+      - DATABASE_HOST=db-webdinamis
     depends_on:
       - db-webdinamis
     restart: always
