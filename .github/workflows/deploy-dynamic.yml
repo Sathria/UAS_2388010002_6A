@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'dynamic-app/**'
+      - 'dynamic-app/**' # Pipeline ini terisolasi, hanya jalan jika folder dynamic-app berubah
 
 jobs:
   build-and-push-dynamic:

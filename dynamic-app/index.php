@@ -71,7 +71,7 @@ if($search != ''){
 <body>
 
     <header>
-        <div class="logo">PHANTOM<span>RATING</span></div>
+        <div class="logo">UAS<span>2388010002</span></div>
         <div class="nav-links">
             <a href="index.php">HOME</a>
             <a href="admin/login.php" onclick="playGifTransition(event)">ADMIN PANEL</a>

@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'static-cv/**' # Pipeline ini hanya jalan jika folder static-cv berubah
+      - 'static-cv/**' # Pipeline ini terisolasi, hanya jalan jika folder static-cv berubah
 
 jobs:
   build-and-push-static:
@@ -38,5 +38,7 @@ jobs:
         key: ${{ secrets.AWS_PRIVATE_KEY }}
         script: |
           cd ~/uas-cloud
+          git reset --hard HEAD
+          git clean -fd
           git pull origin main
           docker compose up -d --build static-cv
