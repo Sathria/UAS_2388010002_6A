@@ -37,11 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!in_array($file_ext, $allowed_exts)) {
                 $error_msg = 'Format cover tidak valid! Hanya diperbolehkan: jpg, jpeg, png, webp, gif.';
             } else {
-                // FIX: Menggunakan absolut container path agar terikat langsung dengan volume Docker Compose
-                $upload_dir = '/var/www/html/uploads/';
-                if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0775, true);
-                }
+                // Jalur relatif aman yang terikat langsung dengan volume Docker Compose
+                $upload_dir = '../uploads/';
                 
                 // Generate a unique and sanitized filename
                 $clean_name = preg_replace('/[^a-zA-Z0-9_.-]/', '_', pathinfo($file_name, PATHINFO_FILENAME));
